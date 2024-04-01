@@ -1,0 +1,25 @@
+name: particle_image
+version: 0.0.1
+# TODO
+description: Create stunning animations with configurable particle emitters. Add rain, smoke, and more effects to your Flutter app!
+homepage: https://newton.7omtech.fr
+issue_tracker: https://github.com/tguerin/newton/issues
+repository: https://github.com/tguerin/newton
+
+environment:
+  sdk: ">=3.2.5 <4.0.0"
+  flutter: ">=3.3.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_hooks: ^0.20.5
+
+dev_dependencies:
+  flutter_lints: 3.0.1
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  assets:
+    - assets/images/default.png

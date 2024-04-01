@@ -1,0 +1,14 @@
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    avoid_print: false
+    camel_case_types: false
+    no_leading_underscores_for_local_identifiers: false
+
+
+analyzer:
+  errors:
+    unused_field: ignore
+    unused_local_variable: ignore
+    invalid_annotation_target: ignore
