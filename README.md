@@ -3,7 +3,6 @@
 ## Progress
 
     ✅ Done
-    🟦 Necessary to 80/20
     ⬜ Not Started
 
 ## PD_Events ✅
@@ -33,7 +32,7 @@
     ✅ rotation
     ✅ rotationOverLifetime
 
-    🟦 trail
+    ⬜ trail
 
     ⬜ alignToDirection
 
@@ -75,8 +74,6 @@
 ## Particle Creator
 
     ⬜ particle editor
-    ⬜ particle to/from json
-    ⬜ (Unity - UI Particle Image) to Flutter
 
 ## Bugs
 
