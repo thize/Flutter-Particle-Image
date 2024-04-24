@@ -31,9 +31,9 @@ abstract class _PD_ShapeImage extends PD_Shape {
   }
 
   Size _processSize(Particle particle, double progress) {
-    double scale = particle.sizeOverLifetime.value(progress);
-    double sizeWidth = particle.startSize.width * scale;
-    double sizeHeight = particle.startSize.height * scale;
+    Size scale = particle.sizeOverLifetime.value(progress);
+    double sizeWidth = particle.startSize.width * scale.width;
+    double sizeHeight = particle.startSize.height * scale.height;
     return Size(sizeWidth, sizeHeight);
   }
 
@@ -53,6 +53,13 @@ abstract class _PD_ShapeImage extends PD_Shape {
     double frame = tile?.frameByTime(progress, totalElapsedMillis) ?? 0;
     int columnByFrame = tile?.columnByFrame(frame) ?? 0;
     int rowByFrame = tile?.rowByFrame(frame) ?? 0;
+    double aspectRatio = particleSize.width / particleSize.height;
+    double particleAspectRatio = width / height;
+    if (aspectRatio > particleAspectRatio) {
+      height = width / aspectRatio;
+    } else {
+      width = height * aspectRatio;
+    }
     final rect = Rect.fromLTWH(
       columnByFrame * width,
       rowByFrame * height,
@@ -60,8 +67,7 @@ abstract class _PD_ShapeImage extends PD_Shape {
       height,
     );
     final transform = RSTransform.fromComponents(
-      rotation: ParticleUtils.toRadians(particle.startRotation +
-          particle.rotationOverLifetime.value(progress)),
+      rotation: 0,
       scale: particleSize.width / width,
       anchorX: width / 2,
       anchorY: height / 2,

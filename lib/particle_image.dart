@@ -9,6 +9,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:vector_math/vector_math_64.dart' hide Colors;
+export 'package:vector_math/vector_math_64.dart' hide Colors;
 
 part 'src/core/color.dart';
 part 'src/core/duration.dart';
@@ -17,6 +19,7 @@ part 'src/core/offset.dart';
 part 'src/core/progress.dart';
 part 'src/core/range.dart';
 part 'src/core/size.dart';
+part 'src/core/vector3.dart';
 part 'src/curve_viwer.dart';
 part 'src/particle.dart';
 part 'src/particle_controller.dart';

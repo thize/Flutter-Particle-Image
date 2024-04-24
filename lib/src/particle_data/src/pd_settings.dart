@@ -37,14 +37,17 @@ class PD_Settings {
 
 class PDS_Size {
   final PD_Size start;
-  final PD_Number overLifetime;
+  final PD_Size overLifetime;
 
   const PDS_Size({
     this.start = const PD_Size(
       height: PD_NumberConstant(40),
       width: PD_NumberConstant(40),
     ),
-    this.overLifetime = const PD_NumberConstant(1),
+    this.overLifetime = const PD_Size(
+      height: PD_NumberConstant(1),
+      width: PD_NumberConstant(1),
+    ),
   });
 }
 
@@ -59,12 +62,12 @@ class PDS_Color {
 }
 
 class PDS_Rotation {
-  final PD_Number start;
-  final PD_Number overLifetime;
+  final PD_Vector3 start;
+  final PD_Vector3 overLifetime;
 
   const PDS_Rotation({
-    this.start = const PD_NumberConstant(0),
-    this.overLifetime = const PD_NumberConstant(0),
+    this.start = const PD_Vector3(),
+    this.overLifetime = const PD_Vector3(),
   });
 }
 

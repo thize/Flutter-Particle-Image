@@ -1,10 +1,5 @@
 # Particle Image
 
-## Progress
-
-    ✅ Done
-    ⬜ Not Started
-
 ## PD_Events ✅
 
     ✅ onEachParticleStart
@@ -42,7 +37,6 @@
     ✅ gravity
     ✅ attractor
     ✅ vortex
-    ⬜ noise
 
 ## PD_Emission ✅
 
@@ -71,11 +65,7 @@
     ⬜ add rotation using Matrix4
     ⬜ square shape change to rectangle
 
-## Particle Creator
-
-    ⬜ particle editor
-
 ## Bugs
 
     ⬜ particle is not being removed if ParticleImage is bigger than lifetime
-    ⬜ particle rotated is not respecting the gravity
+    ⬜ particle rotated by transform is not respecting the gravity

@@ -16,7 +16,7 @@ class PD_Emission {
 
 class PD_Burst {
   final Duration time;
-  final double count;
+  final int count;
 
   const PD_Burst({
     this.time = const Duration(seconds: 1),

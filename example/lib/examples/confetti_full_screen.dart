@@ -23,23 +23,11 @@ class ConfettiFullScreenExample extends StatelessWidget {
 
   ParticleData _corners(Offset offset, double degrees) {
     return ParticleData(
-      transform: (c, child) {
-        return Transform.translate(
-          offset: offset,
-          child: Transform.rotate(
-            angle: ParticleUtils.toRadians(degrees),
-            child: child,
-          ),
-        );
-      },
       settings: PD_Settings(
-        time: PDS_Time(
-          loop: false,
-          lifetime: PD_DurationRandom(
-            const Duration(seconds: 1),
-            const Duration(seconds: 3),
-          ),
-          duration: const Duration(milliseconds: 1000),
+        time: const PDS_Time(
+          loop: !false,
+          lifetime: PD_DurationConstant(Duration(milliseconds: 1000)),
+          duration: Duration(milliseconds: 1000),
         ),
         shape: const PD_ShapeSquare(),
         color: PDS_Color(
@@ -61,39 +49,57 @@ class ConfettiFullScreenExample extends StatelessWidget {
             curve: Curves.easeOutCirc,
           ),
         ),
-        rotation: PDS_Rotation(
-          start: PD_NumberRandomBetweenTwoConstants(-360, 360),
-          overLifetime: const PD_NumberCurve(
-            begin: 0,
-            end: 2000,
-            curve: Curves.linear,
+        rotation: const PDS_Rotation(
+          start: PD_Vector3(
+            x: PD_NumberConstant(0),
+            y: PD_NumberConstant(125),
+            z: PD_NumberConstant(20),
           ),
+          // overLifetime: PD_Vector3Curve(
+          //   begin: PD_Vector3(
+          //     x: PD_NumberConstant(0),
+          //     y: PD_NumberConstant(0),
+          //     z: PD_NumberConstant(0),
+          //   ),
+          //   end: PD_Vector3(
+          //     x: PD_NumberConstant(2000),
+          //     y: PD_NumberConstant(2000),
+          //     z: PD_NumberConstant(2000),
+          //   ),
+          //   curve: Curves.linear,
+          // ),
         ),
-        size: PDS_Size(
-          start: const PD_Size(
-            width: PD_NumberConstant(30),
-            height: PD_NumberConstant(10),
-          ),
-          overLifetime: PD_NumberCurve(
-            begin: 1,
-            end: 0,
-            curve: CurvePoints(const [
-              CurvePoint(force: 1, y: 1),
-              CurvePoint(force: 5, y: 0),
-              CurvePoint(force: 1, y: 1),
-            ]),
-          ),
-        ),
+        // size: PDS_Size(
+        //   start: const PD_Size(
+        //     width: PD_NumberConstant(30),
+        //     height: PD_NumberConstant(30),
+        //   ),
+        //   overLifetime: PD_SizeCurve(
+        //     begin: const PD_Size(
+        //       width: PD_NumberConstant(1),
+        //       height: PD_NumberConstant(1),
+        //     ),
+        //     end: const PD_Size(
+        //       width: PD_NumberConstant(0),
+        //       height: PD_NumberConstant(0),
+        //     ),
+        //     curve: CurvePoints(const [
+        //       CurvePoint(force: 1, y: 1),
+        //       CurvePoint(force: 5, y: 0),
+        //       CurvePoint(force: 1, y: 1),
+        //     ]),
+        //   ),
+        // ),
       ),
-      movement: const PD_Movement(
-        gravity: PD_MovementGravity(
-          force: PD_NumberCurve(
-            begin: -20,
-            end: -120,
-            curve: Curves.easeInOutSine,
-          ),
-        ),
-      ),
+      // movement: const PD_Movement(
+      //   gravity: PD_MovementGravity(
+      //     force: PD_NumberCurve(
+      //       begin: -20,
+      //       end: -120,
+      //       curve: Curves.easeInOutSine,
+      //     ),
+      //   ),
+      // ),
       emission: const PD_Emission(
         bursts: [
           PD_Burst(

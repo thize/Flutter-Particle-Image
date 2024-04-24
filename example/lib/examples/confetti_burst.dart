@@ -61,10 +61,21 @@ class ConfettiBurstExample extends StatelessWidget {
         ),
       ),
       rotation: PDS_Rotation(
-        start: PD_NumberRandomBetweenTwoConstants(0, 360),
-        overLifetime: const PD_NumberCurve(
-          begin: 0,
-          end: 1200,
+        start: PD_Vector3RandomBetweenTwoConstants(
+          Vector3(0, 0, 0),
+          Vector3(0, 0, 360),
+        ),
+        overLifetime: const PD_Vector3Curve(
+          begin: PD_Vector3(
+            x: PD_NumberConstant(0),
+            y: PD_NumberConstant(0),
+            z: PD_NumberConstant(0),
+          ),
+          end: PD_Vector3(
+            x: PD_NumberConstant(0),
+            y: PD_NumberConstant(0),
+            z: PD_NumberConstant(1200),
+          ),
           curve: Curves.linear,
         ),
       ),
@@ -73,9 +84,15 @@ class ConfettiBurstExample extends StatelessWidget {
           width: PD_NumberConstant(65),
           height: PD_NumberConstant(65),
         ),
-        overLifetime: PD_NumberCurve(
-          begin: 1,
-          end: 0,
+        overLifetime: PD_SizeCurve(
+          begin: const PD_Size(
+            width: PD_NumberConstant(1),
+            height: PD_NumberConstant(1),
+          ),
+          end: const PD_Size(
+            width: PD_NumberConstant(0),
+            height: PD_NumberConstant(0),
+          ),
           curve: CurvePoints(const [
             CurvePoint(force: 1, y: 1),
             CurvePoint(force: 5, y: 0),

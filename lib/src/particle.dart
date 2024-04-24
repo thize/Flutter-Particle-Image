@@ -12,16 +12,16 @@ class Particle {
   PD_Number get speedOverLifetime => _speedOverLifetime;
 
   // rotation
-  late double _startRotation;
-  double get startRotation => _startRotation;
-  late PD_Number _rotationOverLifetime;
-  PD_Number get rotationOverLifetime => _rotationOverLifetime;
+  late Vector3 _startRotation;
+  Vector3 get startRotation => _startRotation;
+  late PD_Vector3 _rotationOverLifetime;
+  PD_Vector3 get rotationOverLifetime => _rotationOverLifetime;
 
   // size
   late Size _startSize;
   Size get startSize => _startSize;
-  late PD_Number _sizeOverLifetime;
-  PD_Number get sizeOverLifetime => _sizeOverLifetime;
+  late PD_Size _sizeOverLifetime;
+  PD_Size get sizeOverLifetime => _sizeOverLifetime;
 
   // color
   late Color _startColor;
@@ -103,7 +103,6 @@ class Particle {
 
   (ui.Image, ui.Rect, ui.RSTransform, ui.Color) computeTransformation(
       ui.Image image) {
-    // print('particle_image.dart: computeTransformation at $_currentProgress');
     return data.settings.shape.computeTransformation(
         this, image, _currentProgress, _totalElapsedMillis);
   }
