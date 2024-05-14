@@ -12,4 +12,5 @@ analyzer:
     unused_field: ignore
     unused_local_variable: ignore
     invalid_annotation_target: ignore
+    undefined_getter: ignore
     use_string_in_part_of_directives: ignore

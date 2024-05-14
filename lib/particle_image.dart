@@ -94,6 +94,7 @@ class _ParticleImageState extends State<ParticleImage>
               List<Widget> paintList = [];
               for (var i = 0; i < _activeParticles.length; i++) {
                 var emitter = _activeParticles[i];
+                if (i > snapshot.data!.length - 1) break;
                 paintList.add(_PaintParticle(
                   emitter: emitter,
                   image: snapshot.data![i]!,

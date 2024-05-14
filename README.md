@@ -7,7 +7,14 @@
     ✅ onAnyParticleFinished
     ✅ onLastParticleFinished
 
-## PD_Settings ✅
+## PD_Movement ✅
+
+    ✅ velocity
+    ✅ gravity
+    ✅ attractor
+    ✅ vortex
+
+## PD_Settings
 
     ✅ loop
     ✅ start delay
@@ -25,20 +32,13 @@
     ⬜ colorOverLifetime
 
     ✅ rotation
-    ✅ rotationOverLifetime
+    ⬜ rotationOverLifetime
 
     ⬜ trail
 
     ⬜ alignToDirection
 
-## PD_Movement ✅
-
-    ✅ velocity
-    ✅ gravity
-    ✅ attractor
-    ✅ vortex
-
-## PD_Emission ✅
+## PD_Emission
 
     ✅ rate per second
     ✅ PD_EmissionShape
@@ -61,9 +61,9 @@
 
     ✅ controller
     ✅ sub particle
-    ⬜ color work with images
+    ✅ color work with texture
+    ⬜ size not uniform with texture
     ⬜ add rotation using Matrix4
-    ⬜ square shape change to rectangle
 
 ## Bugs
 

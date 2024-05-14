@@ -5,14 +5,12 @@ class PD_Movement {
   final PD_MovementVelocity? velocity;
   final PD_MovementGravity? gravity;
   final PD_MovementVortex? vortex;
-  // final PD_MovementNoise? noise;
 
   const PD_Movement({
     this.attractor,
     this.velocity,
     this.gravity,
     this.vortex,
-    // this.noise,
   });
 }
 

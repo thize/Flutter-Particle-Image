@@ -2,13 +2,7 @@ part of particle_image;
 
 class ParticleImagePainter extends CustomPainter {
   final List<Particle> particles;
-
   final ui.Image shapesSpriteSheet;
-
-  final Set<ui.Image> _allImages = {};
-  final Map<ui.Image, List<RSTransform>> _transformsPerImage = {};
-  final Map<ui.Image, List<Rect>> _rectsPerImage = {};
-  final Map<ui.Image, List<Color>> _colorsPerImage = {};
 
   ParticleImagePainter({
     required this.particles,
@@ -17,64 +11,52 @@ class ParticleImagePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    _clearTransformations();
-    for (var activeParticle in particles) {
-      _updateTransformations(activeParticle, size);
-      activeParticle.drawExtra(canvas);
-    }
-    for (var image in _allImages) {
-      canvas.drawAtlas(
-        image,
-        _transformsPerImage[image] ?? [],
-        _rectsPerImage[image] ?? [],
-        _colorsPerImage[image] ?? [],
-        BlendMode.dstIn,
-        null,
-        Paint(),
-      );
+    for (var particle in particles) {
+      _drawParticle(canvas, particle, size);
+      particle.drawExtra(canvas);
     }
   }
 
-  void _clearTransformations() {
-    _transformsPerImage.clear();
-    _rectsPerImage.clear();
-    _colorsPerImage.clear();
+  void _drawParticle(Canvas canvas, Particle particle, Size size) {
+    final (image, rect, transform, color) =
+        particle.computeTransformation(shapesSpriteSheet);
+    final paint = Paint()
+      ..color = color
+      ..blendMode = BlendMode.src;
+    final matrix = _createMatrix(transform, size);
+
+    canvas.save();
+    canvas.transform(matrix.storage);
+
+    final rectDest = Rect.fromLTWH(
+      0,
+      0,
+      rect.width / 2,
+      rect.height / 2,
+    );
+
+    canvas.saveLayer(rectDest, Paint());
+    canvas.drawImageRect(
+      image,
+      rect,
+      rectDest,
+      paint,
+    );
+    canvas.restore(); // Restoring the saveLayer
+    canvas.restore(); // Restoring the initial save
+  }
+
+  Matrix4 _createMatrix(RSTransform transform, Size size) {
+    return Matrix4.identity()
+      ..translate(size.width / 2, size.height / 2)
+      ..rotateX(ParticleUtils.toRadians(0))
+      ..rotateY(ParticleUtils.toRadians(0))
+      ..rotateZ(ParticleUtils.toRadians(0))
+      ..translate(transform.tx, transform.ty);
   }
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return particles.isNotEmpty;
-  }
-
-  void _updateTransformations(Particle particle, Size size) {
-    final (image, rect, transform, color) =
-        particle.computeTransformation(shapesSpriteSheet);
-    _allImages.add(image);
-    _rectsPerImage.update(
-      image,
-      (rects) => rects..add(rect),
-      ifAbsent: () => [rect],
-    );
-    _transformsPerImage.update(
-      image,
-      (transforms) => transforms..add(_bySize(transform, size)),
-      ifAbsent: () => [_bySize(transform, size)],
-    );
-    if (particle.data.settings.shape is! PD_ShapeImage) {
-      _colorsPerImage.update(
-        image,
-        (colors) => colors..add(color),
-        ifAbsent: () => [color],
-      );
-    }
-  }
-
-  RSTransform _bySize(RSTransform transform, Size size) {
-    return RSTransform(
-      transform.scos,
-      transform.ssin,
-      transform.tx + size.width / 2,
-      transform.ty + size.height / 2,
-    );
   }
 }

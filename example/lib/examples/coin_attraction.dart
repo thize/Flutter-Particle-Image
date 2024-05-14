@@ -104,6 +104,7 @@ class _CoinAttractionExampleState extends State<CoinAttractionExample> {
           ]),
         ),
       ),
+      color: PDS_Color(start: PD_ColorSingle(Colors.white)),
       shape: const PD_ShapeImage(
         "assets/Coin_Rotation.png",
         tile: PD_TileFPS(
@@ -114,8 +115,8 @@ class _CoinAttractionExampleState extends State<CoinAttractionExample> {
       ),
       size: const PDS_Size(
         start: PD_Size(
-          width: PD_NumberConstant(45),
-          height: PD_NumberConstant(45),
+          width: PD_NumberConstant(40),
+          height: PD_NumberConstant(40),
         ),
       ),
       trail: PD_Trail(

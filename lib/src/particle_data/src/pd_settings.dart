@@ -9,11 +9,10 @@ class PD_Settings {
   final PDS_Rotation rotation;
   final PDS_Color color;
 
-  // final bool prewarm;
   // final bool alignToDirection;
 
   const PD_Settings({
-    this.shape = const PD_ShapeCircle(),
+    this.shape = const PD_ShapeSquare(),
     this.trail,
     this.time = const PDS_Time(),
     this.speed = const PDS_Speed(),
