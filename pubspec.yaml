@@ -1,6 +1,6 @@
 name: particle_image
 description: "The Particle Image is a high performance particle effects flutter widget."
-version: 0.0.1
+version: 0.0.2
 repository: https://github.com/thize/Flutter-Particle-Image
 issue_tracker: https://github.com/thize/Flutter-Particle-Image/issues
 documentation: https://github.com/thize/Flutter-Particle-Image
