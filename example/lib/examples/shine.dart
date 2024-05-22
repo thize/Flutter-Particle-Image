@@ -24,10 +24,12 @@ class ShineExample extends StatelessWidget {
     return const ParticleData(
       settings: PD_Settings(
         shape: PD_ShapeImage("assets/sparkle.png"),
+        color: PDS_Color(
+          start: PD_ColorSingle(Colors.red),
+        ),
         time: PDS_Time(
           duration: Duration(milliseconds: 350),
           lifetime: PD_DurationConstant(Duration(milliseconds: 350)),
-          loop: false,
         ),
         size: PDS_Size(
           start: PD_Size(
@@ -61,12 +63,14 @@ class ShineExample extends StatelessWidget {
   ParticleData _particle2() {
     return const ParticleData(
       settings: PD_Settings(
+        shape: PD_ShapeImage("assets/decal_scorch.png"),
         time: PDS_Time(
           duration: Duration(milliseconds: 400),
           lifetime: PD_DurationConstant(Duration(milliseconds: 400)),
-          loop: false,
         ),
-        shape: PD_ShapeImage("assets/decal_scorch.png"),
+        color: PDS_Color(
+          start: PD_ColorSingle(Colors.red),
+        ),
         speed: PDS_Speed(
           start: PD_NumberConstant(0),
         ),
