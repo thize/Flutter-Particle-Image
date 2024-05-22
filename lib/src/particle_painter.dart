@@ -54,7 +54,6 @@ class ParticleImagePainter extends CustomPainter {
         rect.top.isNaN ||
         rect.right.isNaN ||
         rect.bottom.isNaN) {
-      print('Rect argument contained a NaN value.');
       return;
     }
     _allImages.add(image);
