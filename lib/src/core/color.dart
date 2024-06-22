@@ -66,34 +66,43 @@ class PD_ColorRandom extends PD_Color {
 
 class PD_ColorProgress extends PD_Color {
   final List<Color> colors;
-  final List<int> stops;
+  final Curve curve;
 
-  PD_ColorProgress(this.colors, this.stops)
-      : assert(colors.length == stops.length);
+  PD_ColorProgress({
+    required this.colors,
+    this.curve = Curves.linear,
+  });
 
   @override
   Color value(double progress) {
-    if (progress <= 0) {
-      return colors.first;
-    }
-    if (progress >= 1) {
-      return colors.last;
+    // Apply the curve to the progress
+    double curvedProgress = curve.transform(progress);
+
+    // Calculate the interval
+    int segmentCount = colors.length - 1;
+    double segmentLength = 1.0 / segmentCount;
+
+    // Determine which segment we are in
+    int segmentIndex = (curvedProgress / segmentLength).floor();
+    if (segmentIndex >= segmentCount) {
+      segmentIndex = segmentCount - 1;
     }
 
-    for (int i = 0; i < stops.length - 1; i++) {
-      final start = stops[i];
-      final end = stops[i + 1];
+    // Calculate the local progress within the segment
+    double localProgress =
+        (curvedProgress - segmentIndex * segmentLength) / segmentLength;
 
-      if (progress >= start && progress <= end) {
-        final segmentFraction = (progress - start) / (end - start);
-        return Color.lerp(colors[i], colors[i + 1], segmentFraction)!;
-      }
-    }
-    return colors.last;
+    // Interpolate between the two colors in the segment
+    return Color.lerp(
+            colors[segmentIndex], colors[segmentIndex + 1], localProgress) ??
+        colors[segmentIndex];
   }
 
   @override
   PD_Color clone() {
-    return PD_ColorProgress(colors, stops);
+    return PD_ColorProgress(
+      colors: colors,
+      curve: curve,
+    );
   }
 }

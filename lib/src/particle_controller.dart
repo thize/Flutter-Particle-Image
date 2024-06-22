@@ -6,10 +6,13 @@ enum ParticleState {
   killed,
 }
 
+/// The `ParticleController` class is part of the particle_image library and is used to manage the state of particle animations.
+/// It allows for controlling the state of particles, whether they are running, ended, or killed.
+/// This class also supports the addition and removal of listeners that respond to state changes.
 class ParticleController {
   ParticleState state = ParticleState.killed;
   final bool newParticlesAtTop;
-  static bool withDebug = kDebugMode;
+  final bool _autoStart;
 
   final List<VoidCallback?> _listeners =
       List<VoidCallback?>.empty(growable: true);
@@ -17,8 +20,10 @@ class ParticleController {
   ParticleController({
     bool autoStart = true,
     this.newParticlesAtTop = true,
-  }) {
-    if (autoStart) start();
+  }) : _autoStart = autoStart;
+
+  void onInit() {
+    if (_autoStart) start();
   }
 
   void start() {

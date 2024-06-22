@@ -26,36 +26,36 @@ class PD_Trail {
     double currentProgress,
     Particle particle,
   ) {
-    List<TrailPoint> trailPoints = particle.trailPoints;
+    // List<TrailPoint> trailPoints = particle.trailPoints;
 
-    if (trailPoints.length < 2) {
-      return; // No trail to draw
-    }
+    // if (trailPoints.length < 2) {
+    //   return; // No trail to draw
+    // }
 
-    Paint trailPaint = Paint()
-      ..strokeCap = StrokeCap.round
-      ..strokeWidth = width.value(0);
+    // Paint trailPaint = Paint()
+    //   ..strokeCap = StrokeCap.round
+    //   ..strokeWidth = width.value(0);
 
-    for (int i = 1; i < trailPoints.length; i++) {
-      TrailPoint startPoint = trailPoints[i - 1];
-      TrailPoint endPoint = trailPoints[i];
+    // for (int i = 1; i < trailPoints.length; i++) {
+    //   TrailPoint startPoint = trailPoints[i - 1];
+    //   TrailPoint endPoint = trailPoints[i];
 
-      double startTime = startPoint.time;
-      double endTime = endPoint.time;
+    //   double startTime = startPoint.time;
+    //   double endTime = endPoint.time;
 
-      Color startColor = colorOverTrail.value(0);
-      Color endColor = colorOverTrail.value(1);
+    //   Color startColor = colorOverTrail.value(0);
+    //   Color endColor = colorOverTrail.value(1);
 
-      double lerpProgress =
-          (currentProgress - startTime) / (endTime - startTime);
-      Color color = Color.lerp(startColor, endColor, lerpProgress)!;
-      trailPaint.color = color;
+    //   double lerpProgress =
+    //       (currentProgress - startTime) / (endTime - startTime);
+    //   Color color = Color.lerp(startColor, endColor, lerpProgress)!;
+    //   trailPaint.color = color;
 
-      Offset start = startPoint.position;
-      Offset end = endPoint.position;
+    //   Offset start = startPoint.position;
+    //   Offset end = endPoint.position;
 
-      canvas.drawLine(start, end, trailPaint);
-    }
+    //   canvas.drawLine(start, end, trailPaint);
+    // }
   }
 }
 

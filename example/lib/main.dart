@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:particle_image/particle_image.dart';
+import 'package:particle_image_example/curve_viwer.dart';
 
 import 'examples/index.dart';
 
@@ -39,23 +40,24 @@ class _HomePageState extends State<HomePage> {
   }
 
   Map<String, Widget> get _examples => {
-        'Shine': ShineExample(controller: controller),
-        'Confetti Full Screen':
-            ConfettiFullScreenExample(controller: controller),
-        'Confetti Burst': ConfettiBurstExample(controller: controller),
-        'Uniform Emitter': UniformEmitterExample(controller: controller),
-        'Coin Attraction': CoinAttractionExample(controller: controller),
-        'Triangle': TriangleExample(controller: controller),
-        'Attracting Static': AttractionExample(
-          controller: controller,
-          key: UniqueKey(),
-          moving: false,
-        ),
-        'Attracting Moving': AttractionExample(
-          controller: controller,
-          key: UniqueKey(),
-          moving: true,
-        ),
+        'Test': TestExample(controller: controller),
+        // 'Shine': ShineExample(controller: controller),
+        // 'Confetti Full Screen':
+        //     ConfettiFullScreenExample(controller: controller),
+        // 'Confetti Burst': ConfettiBurstExample(controller: controller),
+        // 'Uniform Emitter': UniformEmitterExample(controller: controller),
+        // 'Coin Attraction': CoinAttractionExample(controller: controller),
+        // 'Triangle': TriangleExample(controller: controller),
+        // 'Attracting Static': AttractionExample(
+        //   controller: controller,
+        //   key: UniqueKey(),
+        //   moving: false,
+        // ),
+        // 'Attracting Moving': AttractionExample(
+        //   controller: controller,
+        //   key: UniqueKey(),
+        //   moving: true,
+        // ),
         'Curve Viewer': CurveViewer(toUseCurve: _curvePoints),
       };
 

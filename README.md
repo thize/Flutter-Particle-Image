@@ -1,13 +1,13 @@
 # Particle Image
 
-## PD_Events ✅
+## PD_Events
 
     ✅ onEachParticleStart
     ✅ onFirstParticleFinished
     ✅ onAnyParticleFinished
     ✅ onLastParticleFinished
 
-## PD_Movement ✅
+## PD_Movement
 
     ✅ velocity
     ✅ gravity
@@ -16,23 +16,15 @@
 
 ## PD_Settings
 
-    ✅ loop
-    ✅ start delay
+    ⬜ loop
     ✅ duration
     ✅ lifetime
+    ✅ start delay
     ✅ shape
-
-    ✅ size
     ✅ sizeOverLifetime
-
-    ✅ speed
     ✅ speedOverLifetime
-
-    ✅ color
-    ⬜ colorOverLifetime
-
-    ✅ rotation
-    ⬜ rotationOverLifetime
+    ✅ colorOverLifetime
+    ✅ rotationOverLifetime (just Z axis)
 
     ⬜ trail
 
@@ -41,31 +33,22 @@
 ## PD_Emission
 
     ✅ rate per second
+    ✅ rate over duration
+    ✅ bursts
     ✅ PD_EmissionShape
         ✅ point
         ✅ line
         ✅ circle
         ✅ rectangle
         ✅ directional
-    ✅ PD_EmissionShape direction
-        ✅ point
-        ✅ line
-        ✅ circle
-        ✅ rectangle
-        ✅ directional
-    ✅ bursts
-    ✅ rate over duration
     ⬜ emission shape uniform
 
 ## Others
 
     ✅ controller
-    ✅ sub particle
     ✅ color work with texture
-    ⬜ size not uniform with texture
+    ✅ sub particle
+    ⬜ loop each sub particle
+    ⬜ events outside of particle (inside of particle emitter)
     ⬜ add rotation using Matrix4
-
-## Bugs
-
-    ⬜ particle is not being removed if ParticleImage is bigger than lifetime
-    ⬜ particle rotated by transform is not respecting the gravity
+    ⬜ texture is not fit to size (cover, contain, stretch, repeat)

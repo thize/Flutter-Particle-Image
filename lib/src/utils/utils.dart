@@ -25,14 +25,15 @@ class ParticleUtils {
     return Offset(x, y);
   }
 
-  static (Offset, Size) fromKey(GlobalKey key, BuildContext context) {
+  static (Offset, Size) getOffsetAndSizefromKey(
+      GlobalKey key, BuildContext context) {
     final RenderBox? renderBox =
         key.currentContext?.findRenderObject() as RenderBox?;
     if (renderBox != null) {
       final Offset position = renderBox.localToGlobal(Offset.zero);
       return (position, renderBox.size);
     }
-    return (const Offset(-1, -1), Size.zero);
+    return (Offset.zero, Size.zero);
   }
 
   static Offset rotatePointArroundCenter(Offset point, double angle) {

@@ -1,85 +1,45 @@
 part of particle_image;
 
+/// The `ParticleImagePainter` class is a custom painter responsible for rendering particles on a canvas.
+/// It utilizes a `ParticleEmitter` to retrieve and draw the particles based on their current state and properties.
 class ParticleImagePainter extends CustomPainter {
-  final List<Particle> particles;
+  final ParticleEmitter? emitter;
 
-  final ui.Image shapesSpriteSheet;
+  final Paint _paint = Paint()
+    ..color = const Color(0xff6FFFFF)
+    ..style = PaintingStyle.stroke
+    ..strokeWidth = 1.5;
 
-  final Set<ui.Image> _allImages = {};
-  final Map<ui.Image, List<RSTransform>> _transformsPerImage = {};
-  final Map<ui.Image, List<Rect>> _rectsPerImage = {};
-  final Map<ui.Image, List<Color>> _colorsPerImage = {};
-
-  ParticleImagePainter({
-    required this.particles,
-    required this.shapesSpriteSheet,
-  });
+  ParticleImagePainter({super.repaint, required this.emitter});
 
   @override
   void paint(Canvas canvas, Size size) {
-    _clearTransformations();
-    for (var activeParticle in particles) {
-      _updateTransformations(activeParticle, size);
-      activeParticle.drawExtra(canvas);
+    if (emitter == null) return;
+    for (final particleData in emitter!.particles.keys) {
+      ParticleDraw? draw = emitter!.particlesDraw[particleData];
+      if (draw == null) continue;
+      // particleData.emission.shape.paint(
+      //   canvas,
+      //   Offset.zero + size.center(Offset.zero),
+      //   _paint,
+      //   size,
+      // );
+      if (emitter!.isKilled) return;
+      for (final particle in emitter!.particles[particleData]!) {
+        if (particle.isDone) continue;
+        canvas.drawAtlas(
+          draw.image,
+          draw.transforms,
+          draw.rectangles,
+          draw.colors,
+          BlendMode.modulate,
+          null,
+          _paint,
+        );
+      }
     }
-    for (var image in _allImages) {
-      canvas.drawAtlas(
-        image,
-        _transformsPerImage[image] ?? [],
-        _rectsPerImage[image] ?? [],
-        _colorsPerImage[image] ?? [],
-        BlendMode.modulate,
-        null,
-        Paint(),
-      );
-    }
-  }
-
-  void _clearTransformations() {
-    _transformsPerImage.clear();
-    _rectsPerImage.clear();
-    _colorsPerImage.clear();
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return particles.isNotEmpty;
-  }
-
-  void _updateTransformations(Particle particle, Size size) {
-    final (image, rect, transform, color) =
-        particle.computeTransformation(shapesSpriteSheet);
-    RSTransform rst = _bySize(transform, size);
-    if (rect.left.isNaN ||
-        rect.top.isNaN ||
-        rect.right.isNaN ||
-        rect.bottom.isNaN) {
-      return;
-    }
-    _allImages.add(image);
-    _rectsPerImage.update(
-      image,
-      (rects) => rects..add(rect),
-      ifAbsent: () => [rect],
-    );
-    _transformsPerImage.update(
-      image,
-      (transforms) => transforms..add(rst),
-      ifAbsent: () => [rst],
-    );
-    _colorsPerImage.update(
-      image,
-      (colors) => colors..add(color),
-      ifAbsent: () => [color],
-    );
-  }
-
-  RSTransform _bySize(RSTransform transform, Size size) {
-    return RSTransform(
-      transform.scos,
-      transform.ssin,
-      transform.tx + size.width / 2,
-      transform.ty + size.height / 2,
-    );
-  }
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }

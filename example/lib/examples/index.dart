@@ -4,5 +4,6 @@ export 'confetti_burst.dart';
 export 'confetti_full_screen.dart';
 export 'over_duration.dart';
 export 'shine.dart';
+export 'test.dart';
 export 'triangle.dart';
 export 'uniform_emitter.dart';

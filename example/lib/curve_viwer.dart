@@ -1,6 +1,6 @@
-// ignore_for_file: library_private_types_in_public_api
+import 'dart:ui';
 
-part of particle_image;
+import 'package:flutter/material.dart';
 
 class CurveViewer extends StatelessWidget {
   const CurveViewer({super.key, required this.toUseCurve});
@@ -55,7 +55,7 @@ class AnimationAndCurveDemo extends StatefulWidget {
   final KindOfAnimation kindOfAnim;
 
   @override
-  _AnimationAndCurveDemoState createState() => _AnimationAndCurveDemoState();
+  State<AnimationAndCurveDemo> createState() => _AnimationAndCurveDemoState();
 }
 
 class _AnimationAndCurveDemoState extends State<AnimationAndCurveDemo>

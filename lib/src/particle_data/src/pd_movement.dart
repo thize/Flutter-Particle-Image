@@ -24,12 +24,10 @@ class PD_MovementAttractor {
 
   PD_MovementAttractor({
     GlobalKey? targetKey,
-    Offset? targetOffset,
     required this.context,
     required PD_NumberCurve lerp,
   }) {
-    assert(targetKey != null || targetOffset != null);
-    _targetOffset = targetOffset;
+    assert(targetKey != null);
     _targetKey = targetKey;
     _lerp = lerp;
   }
@@ -37,10 +35,7 @@ class PD_MovementAttractor {
   Offset target() {
     if (_targetKey == null) return _notNullTargetOffset;
     final (Offset _offset, Size _size) =
-        ParticleUtils.fromKey(_targetKey!, context);
-    if (_offset.dx == -1 && _offset.dy == -1) {
-      return _notNullTargetOffset;
-    }
+        ParticleUtils.getOffsetAndSizefromKey(_targetKey!, context);
     _targetOffset = Offset(
       _offset.dx + _size.width / 2,
       _offset.dy + _size.height / 2,
@@ -52,10 +47,6 @@ class PD_MovementAttractor {
 
   double progressLerp(double progress) {
     return _lerp.value(progress);
-  }
-
-  double reverseProgressLerp(double progress) {
-    return 1 - _lerp.value(progress);
   }
 }
 

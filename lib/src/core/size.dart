@@ -41,9 +41,15 @@ class PD_SizeCurve extends PD_Size {
   Size value(double progress) {
     return Size(
       lerpDouble(
-          begin.width.value(0), end.width.value(0), curve.transform(progress))!,
-      lerpDouble(begin.height.value(0), end.height.value(0),
-          curve.transform(progress))!,
+        begin.width.value(0),
+        end.width.value(0),
+        curve.transform(progress),
+      )!,
+      lerpDouble(
+        begin.height.value(0),
+        end.height.value(0),
+        curve.transform(progress),
+      )!,
     );
   }
 
