@@ -65,8 +65,8 @@ class _TestExampleState extends State<TestExample> {
           targetKey: targetKey,
           lerp: const PD_NumberCurve(
             curve: Curves.linear,
-            begin: 0,
-            end: 1,
+            begin: PD_NumberConstant(0),
+            end: PD_NumberConstant(1),
           ),
         ),
         gravity: const PD_MovementGravity(

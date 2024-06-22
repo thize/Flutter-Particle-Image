@@ -192,6 +192,7 @@ class ParticleEmitter {
         data: particleData,
         emitter: this,
         onDead: () {
+          int index = particles[particleData]!.indexOf(particle);
           deadParticles[particleData]!.add(particle);
           _updateParticle(particle);
           particleData.events.onEachParticleFinished?.call();

@@ -9,7 +9,7 @@ class PD_Settings {
   final PD_Color color;
   final PD_Trail? trail;
 
-  // final bool alignToDirection;
+  final bool alignToDirection;
 
   PD_Settings({
     PD_Shape? shape,
@@ -22,6 +22,7 @@ class PD_Settings {
     this.rotation = const PD_Vector3(),
     this.color = const PD_ColorSingle(),
     this.trail,
+    this.alignToDirection = false,
   }) : shape = shape ?? PD_ShapeCircle();
 
   PD_Settings clone() {
@@ -33,6 +34,7 @@ class PD_Settings {
       size: size,
       rotation: rotation,
       color: color,
+      alignToDirection: alignToDirection,
     );
   }
 }

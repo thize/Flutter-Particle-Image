@@ -25,10 +25,9 @@
     ✅ speedOverLifetime
     ✅ colorOverLifetime
     ✅ rotationOverLifetime (just Z axis)
+    ✅ alignToDirection
 
     ⬜ trail
-
-    ⬜ alignToDirection
 
 ## PD_Emission
 
@@ -51,4 +50,9 @@
     ⬜ loop each sub particle
     ⬜ events outside of particle (inside of particle emitter)
     ⬜ add rotation using Matrix4
-    ⬜ texture is not fit to size (cover, contain, stretch, repeat)
+    ⬜ texture fit (cover, contain, stretch, repeat)
+
+## Bugs
+
+    ⬜ position of emission is not correct
+    ⬜ fix alignToDirection with attractor to not aim the attractor, but the path to attractor

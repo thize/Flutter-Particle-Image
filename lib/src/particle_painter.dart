@@ -18,12 +18,14 @@ class ParticleImagePainter extends CustomPainter {
     for (final particleData in emitter!.particles.keys) {
       ParticleDraw? draw = emitter!.particlesDraw[particleData];
       if (draw == null) continue;
-      // particleData.emission.shape.paint(
-      //   canvas,
-      //   Offset.zero + size.center(Offset.zero),
-      //   _paint,
-      //   size,
-      // );
+      if (ParticleImage.withDebug) {
+        particleData.emission.shape.paint(
+          canvas,
+          Offset.zero + size.center(Offset.zero),
+          _paint,
+          size,
+        );
+      }
       if (emitter!.isKilled) return;
       for (final particle in emitter!.particles[particleData]!) {
         if (particle.isDone) continue;

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:particle_image/particle_image.dart';
-import 'package:particle_image_example/curve_viwer.dart';
 
 import 'examples/index.dart';
 
@@ -32,33 +31,34 @@ class _HomePageState extends State<HomePage> {
 
   ParticleController controller = ParticleController();
 
-  CurvePoints get _curvePoints {
-    return CurvePoints(const [
-      CurvePoint(force: 20, y: 1),
-      CurvePoint(force: 80, y: 0),
-    ]);
-  }
+  // CurvePoints get _curvePoints {
+  //   return CurvePoints(const [
+  //     CurvePoint(force: 20, y: 1),
+  //     CurvePoint(force: 80, y: 0),
+  //   ]);
+  // }
 
   Map<String, Widget> get _examples => {
-        'Test': TestExample(controller: controller),
+        'Attracting Moving': AttractionExample(
+          controller: controller,
+          key: UniqueKey(),
+          moving: true,
+        ),
+        'Coin Attraction': CoinAttractionExample(controller: controller),
+        // 'Confetti Burst': ConfettiBurstExample(controller: controller),
         // 'Shine': ShineExample(controller: controller),
         // 'Confetti Full Screen':
         //     ConfettiFullScreenExample(controller: controller),
-        // 'Confetti Burst': ConfettiBurstExample(controller: controller),
         // 'Uniform Emitter': UniformEmitterExample(controller: controller),
-        // 'Coin Attraction': CoinAttractionExample(controller: controller),
         // 'Triangle': TriangleExample(controller: controller),
         // 'Attracting Static': AttractionExample(
         //   controller: controller,
         //   key: UniqueKey(),
         //   moving: false,
         // ),
-        // 'Attracting Moving': AttractionExample(
-        //   controller: controller,
-        //   key: UniqueKey(),
-        //   moving: true,
-        // ),
-        'Curve Viewer': CurveViewer(toUseCurve: _curvePoints),
+
+        // 'Test': TestExample(controller: controller),
+        // 'Curve Viewer': CurveViewer(toUseCurve: _curvePoints),
       };
 
   @override

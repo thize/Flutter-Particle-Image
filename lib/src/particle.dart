@@ -58,6 +58,7 @@ class Particle {
   //! Methods
 
   void setInitialData({required int totalElapsedMillis}) {
+    _isKilled = false;
     _totalElapsedMillis = totalElapsedMillis;
     startDurationInMilliseconds = totalElapsedMillis;
     endDurationInMilliseconds = totalElapsedMillis +
@@ -181,7 +182,7 @@ class Particle {
     final (Rect _rect, anchor, scale) = data.settings.shape
         .computeImage(this, image, progress, _totalElapsedMillis);
     transform.update(
-      rotation: rotationOverLifetime.value(progress).z,
+      rotation: _getRotation(),
       translateX: _nextPosition.dx,
       translateY: _nextPosition.dy,
       anchorX: anchor.dx,
@@ -191,7 +192,29 @@ class Particle {
     rect.fromRect(_rect);
   }
 
+  double _getRotation() {
+    if (data.settings.alignToDirection) {
+      Offset direction = _velocity;
+
+      PD_MovementAttractor? attractor = data.movement.attractor;
+      if (attractor != null) {
+        Offset targetGlobalPosition = attractor.target();
+        Offset emitterGlobalPosition = emitter.position;
+        Offset targetLocalPosition =
+            targetGlobalPosition - emitterGlobalPosition;
+        direction = targetLocalPosition - _modifedPosition;
+      }
+
+      return math.atan2(direction.dy, direction.dx) + math.pi / 2;
+    }
+    return rotationOverLifetime.value(progress).z;
+  }
+
+  bool _isKilled = false;
+
   void kill() {
+    if (_isKilled) return;
+    _isKilled = true;
     color.update(
       0,
       color.red,
