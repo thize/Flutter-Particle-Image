@@ -18,14 +18,21 @@ class _CoinAttractionExampleState extends State<CoinAttractionExample> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        CoinsParticle(
-          coins: 15,
-          targetKey: targetKey,
-          addCoins: (int coins) {
-            setState(() {
-              this.coins += coins;
-            });
-          },
+        Center(
+          child: SizedBox(
+            width: 0,
+            height: 0,
+            child: CoinsParticle(
+              controller: widget.controller,
+              coins: 1,
+              targetKey: targetKey,
+              addCoins: (int coins) {
+                setState(() {
+                  this.coins += coins;
+                });
+              },
+            ),
+          ),
         ),
         _target(),
       ],
@@ -68,11 +75,13 @@ class CoinsParticle extends StatefulWidget {
     required this.coins,
     required this.targetKey,
     required this.addCoins,
+    required this.controller,
   });
 
   final int coins;
   final GlobalKey targetKey;
   final Function(int coins) addCoins;
+  final ParticleController controller;
 
   @override
   State<CoinsParticle> createState() => _CoinsParticleState();
@@ -97,26 +106,30 @@ class _CoinsParticleState extends State<CoinsParticle> {
 
   @override
   Widget build(BuildContext context) {
-    return ParticleImage(particlesData: [
-      ParticleData(
-        settings: _settings(),
-        movement: _movement(),
-        emission: _emission(),
-        events: PD_Events(
-          onLastParticleFinished: () {
-            widget.addCoins(_extraCoins);
-          },
-          onEachParticleFinished: () {
-            widget.addCoins(_coinsPerParticle);
-          },
+    return ParticleImage(
+      controller: widget.controller,
+      particlesData: [
+        ParticleData(
+          settings: _settings(),
+          movement: _movement(),
+          emission: _emission(),
+          events: PD_Events(
+            onLastParticleFinished: () {
+              widget.addCoins(_extraCoins);
+            },
+            onEachParticleFinished: () {
+              widget.addCoins(_coinsPerParticle);
+            },
+          ),
         ),
-      ),
-    ]);
+      ],
+    );
   }
 
   PD_Emission _emission() {
     return PD_Emission(
       shape: const PD_EmissionShapeCircle(),
+      ratePerSecond: 50,
       bursts: [
         PD_Burst(
           time: Duration.zero,
@@ -127,15 +140,15 @@ class _CoinsParticleState extends State<CoinsParticle> {
   }
 
   PD_Settings _settings() {
-    var duration = PD_DurationRandom(
+    var lifetime = PD_DurationRandom(
       const Duration(milliseconds: 950),
       const Duration(milliseconds: 1200),
     );
     return PD_Settings(
       time: PDS_Time(
-        loop: false,
-        lifetime: duration,
-        duration: duration.value(0),
+        loop: !false,
+        lifetime: lifetime,
+        duration: const Duration(milliseconds: 1000),
       ),
       speed: PD_NumberCurve(
         begin: const PD_NumberConstant(0),
@@ -146,6 +159,7 @@ class _CoinsParticleState extends State<CoinsParticle> {
         ]),
       ),
       shape: PD_ShapeImage(
+        // "assets/sparkle.png",
         "assets/Coin_Rotation.png",
         tile: const PD_TileFPS(
           columns: 4,
@@ -161,17 +175,13 @@ class _CoinsParticleState extends State<CoinsParticle> {
       //   ratio: 0.74,
       //   vertexDistance: 10,
       //   width: const PD_NumberCurve(
-      //     begin: 1,
-      //     end: 0,
+      //     begin: PD_NumberConstant(1),
+      //     end: PD_NumberConstant(0),
       //     curve: Curves.linear,
       //   ),
-      //   inheritParticleColor: true,
-      //   colorOverLifetime: PD_ColorSingle(
-      //     const Color(0xffFFD204).withOpacity(0.57),
-      //   ),
       //   colorOverTrail: PD_ColorProgress(
-      //     [Colors.white, Colors.white.withOpacity(0)],
-      //     [0, 1],
+      //     colors: [Colors.red, Colors.red.withOpacity(0)],
+      //     curve: Curves.linear,
       //   ),
       //   dieWithParticle: true,
       //   lifetime: 0.2,

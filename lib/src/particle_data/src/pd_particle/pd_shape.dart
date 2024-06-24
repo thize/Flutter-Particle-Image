@@ -2,7 +2,6 @@ part of particle_image;
 
 abstract class PD_Shape {
   final String shapePath;
-
   final PD_Tile? tile;
 
   static const _shapeSpriteSheetPath =
@@ -30,8 +29,13 @@ abstract class PD_Shape {
     double progress,
     int totalElapsedMillis,
   ) {
-    Size imageSize = _getSpriteSize(image, particle, progress);
     Size particleSize = particle.sizeOverLifetime.value(progress);
+
+    double aspectRatio = (particleSize.height != 0)
+        ? (particleSize.width / particleSize.height)
+        : 1.0;
+
+    Size imageSize = _getSpriteSize(image, particle, progress);
     int columns = tile?.columns ?? 1;
     int rows = tile?.rows ?? 1;
     double width = imageSize.width / columns;
@@ -39,13 +43,14 @@ abstract class PD_Shape {
     double frame = tile?.frameByTime(progress, totalElapsedMillis) ?? 0;
     int columnByFrame = tile?.columnByFrame(frame) ?? 0;
     int rowByFrame = tile?.rowByFrame(frame) ?? 0;
-    double aspectRatio = particleSize.width / particleSize.height;
-    double particleAspectRatio = width / height;
+    double particleAspectRatio = (height != 0) ? (width / height) : 1.0;
+
     if (aspectRatio > particleAspectRatio) {
       height = width / aspectRatio;
     } else {
       width = height * aspectRatio;
     }
+
     final rect = Rect.fromLTWH(
       columnByFrame * width,
       rowByFrame * height,
@@ -53,7 +58,8 @@ abstract class PD_Shape {
       height,
     );
     Offset anchor = Offset(width / 2, height / 2);
-    double scale = particleSize.width / width;
+    double scale = (width != 0) ? (particleSize.width / width) : 1.0;
+
     return (rect, anchor, scale);
   }
 }

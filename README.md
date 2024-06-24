@@ -16,7 +16,7 @@
 
 ## PD_Settings
 
-    ⬜ loop
+    ✅ loop
     ✅ duration
     ✅ lifetime
     ✅ start delay

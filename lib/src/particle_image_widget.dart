@@ -75,9 +75,6 @@ class _ParticleImageState extends State<ParticleImage>
         _ticker.stop();
         _emitter?.kill();
       }
-      if (widget.particlesData.any((e) => e.settings.time.loop)) {
-        _controller.start();
-      }
     } else if (_controller.state == ParticleState.running) {
       if (!_ticker.isActive) {
         _emitter?.init();

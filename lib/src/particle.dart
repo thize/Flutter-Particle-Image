@@ -51,6 +51,7 @@ class Particle {
 
   double _fixedTime = 1;
   int _totalElapsedMillis = 0;
+  List<TrailPoint> trailPoints = [];
 
   //! Getters
   bool get isDone => progress == 1;
@@ -58,7 +59,8 @@ class Particle {
   //! Methods
 
   void setInitialData({required int totalElapsedMillis}) {
-    _isKilled = false;
+    progress = 0;
+    isDead = false;
     _totalElapsedMillis = totalElapsedMillis;
     startDurationInMilliseconds = totalElapsedMillis;
     endDurationInMilliseconds = totalElapsedMillis +
@@ -82,12 +84,15 @@ class Particle {
     _modifedPosition = startPosition;
     double startSpeed = speedOverLifetime.value(0);
     _velocity = _direction * startSpeed;
-    progress = 0;
     _applyTransformAndRect();
+    trailPoints.clear();
   }
 
   void update(int totalElapsedMillis) {
-    if (isDone) return;
+    if (isDone) {
+      kill();
+      return;
+    }
     int elapsedSinceLastUpdate = totalElapsedMillis - _totalElapsedMillis;
     _totalElapsedMillis = totalElapsedMillis;
     _fixedTime = elapsedSinceLastUpdate / 10;
@@ -105,7 +110,7 @@ class Particle {
     }
     _applyTransformAndRect();
 
-    if (isDone) kill();
+    _updateTrail(totalElapsedMillis);
   }
 
   void _updateProgress() {
@@ -121,7 +126,9 @@ class Particle {
 
   void _applySizeOverLifetime() {
     final s = sizeOverLifetime.value(progress);
-    rect.update(s.width, s.height);
+    rect.update(100, 100);
+    // TODO: fix
+    // rect.update(s.width, s.height);
   }
 
   void _applyGravity() {
@@ -210,11 +217,23 @@ class Particle {
     return rotationOverLifetime.value(progress).z;
   }
 
-  bool _isKilled = false;
+  void _updateTrail(int totalElapsedMillis) {
+    if (data.settings.trail == null) return;
+    if (trailPoints.isEmpty ||
+        _totalElapsedMillis - trailPoints.last.startElapsedMillis >
+            data.settings.trail!.vertexDistance) {
+      trailPoints.add(TrailPoint(_nextPosition, totalElapsedMillis));
+    }
+    trailPoints.removeWhere((point) =>
+        (totalElapsedMillis - point.startElapsedMillis) >
+        data.settings.trail!.lifetime * 1000);
+  }
+
+  bool isDead = false;
 
   void kill() {
-    if (_isKilled) return;
-    _isKilled = true;
+    if (isDead) return;
+    isDead = true;
     color.update(
       0,
       color.red,
@@ -222,6 +241,11 @@ class Particle {
       color.blue,
     );
     onDead();
+    progress = 1;
+  }
+
+  void drawExtra(Canvas canvas) {
+    data.settings.trail?.draw(canvas, progress, this);
   }
 }
 

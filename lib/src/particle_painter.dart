@@ -14,21 +14,22 @@ class ParticleImagePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (emitter == null) return;
+    if (emitter == null || emitter!.isKilled) return;
+
     for (final particleData in emitter!.particles.keys) {
       ParticleDraw? draw = emitter!.particlesDraw[particleData];
       if (draw == null) continue;
-      if (ParticleImage.withDebug) {
-        particleData.emission.shape.paint(
-          canvas,
-          Offset.zero + size.center(Offset.zero),
-          _paint,
-          size,
-        );
-      }
-      if (emitter!.isKilled) return;
+      // if (ParticleImage.withDebug) {
+      //   particleData.emission.shape.paint(
+      //     canvas,
+      //     Offset.zero + size.center(Offset.zero),
+      //     _paint,
+      //     size,
+      //   );
+      // }
+
       for (final particle in emitter!.particles[particleData]!) {
-        if (particle.isDone) continue;
+        particle.drawExtra(canvas);
         canvas.drawAtlas(
           draw.image,
           draw.transforms,

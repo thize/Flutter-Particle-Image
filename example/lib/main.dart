@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      showPerformanceOverlay: true,
       theme: ThemeData.dark(),
       home: const HomePage(),
     );
@@ -39,14 +40,14 @@ class _HomePageState extends State<HomePage> {
   // }
 
   Map<String, Widget> get _examples => {
-        'Attracting Moving': AttractionExample(
-          controller: controller,
-          key: UniqueKey(),
-          moving: true,
-        ),
         'Coin Attraction': CoinAttractionExample(controller: controller),
-        // 'Confetti Burst': ConfettiBurstExample(controller: controller),
         // 'Shine': ShineExample(controller: controller),
+        // 'Attracting Moving': AttractionExample(
+        //   controller: controller,
+        //   key: UniqueKey(),
+        //   moving: true,
+        // ),
+        // 'Confetti Burst': ConfettiBurstExample(controller: controller),
         // 'Confetti Full Screen':
         //     ConfettiFullScreenExample(controller: controller),
         // 'Uniform Emitter': UniformEmitterExample(controller: controller),
@@ -64,21 +65,19 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          _topBar(),
-          Expanded(child: _examples.values.elementAt(_index)),
-          _bottomBar(),
-        ],
+      body: SafeArea(
+        child: Column(
+          children: [
+            _topBar(),
+            Expanded(child: _examples.values.elementAt(_index)),
+            _bottomBar(),
+          ],
+        ),
       ),
     );
   }
 
   Widget _bottomBar() {
-    bool atEnd = _index == _examples.length - 1;
-    if (atEnd) {
-      return const SizedBox();
-    }
     return Padding(
       padding: const EdgeInsets.only(bottom: 40),
       child: Row(
