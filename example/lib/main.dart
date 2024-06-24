@@ -41,12 +41,12 @@ class _HomePageState extends State<HomePage> {
 
   Map<String, Widget> get _examples => {
         'Coin Attraction': CoinAttractionExample(controller: controller),
-        // 'Shine': ShineExample(controller: controller),
-        // 'Attracting Moving': AttractionExample(
-        //   controller: controller,
-        //   key: UniqueKey(),
-        //   moving: true,
-        // ),
+        'Shine': ShineExample(controller: controller),
+        'Attracting Moving': AttractionExample(
+          controller: controller,
+          key: UniqueKey(),
+          moving: true,
+        ),
         // 'Confetti Burst': ConfettiBurstExample(controller: controller),
         // 'Confetti Full Screen':
         //     ConfettiFullScreenExample(controller: controller),
