@@ -5,10 +5,12 @@ part of particle_image;
 class ParticleImagePainter extends CustomPainter {
   final ParticleEmitter? emitter;
 
-  final Paint _paint = Paint()
+  final Paint _debugPaint = Paint()
     ..color = const Color(0xff6FFFFF)
     ..style = PaintingStyle.stroke
     ..strokeWidth = 1.5;
+
+  final Paint _particlePaint = Paint();
 
   ParticleImagePainter({super.repaint, required this.emitter});
 
@@ -19,27 +21,27 @@ class ParticleImagePainter extends CustomPainter {
     for (final particleData in emitter!.particles.keys) {
       ParticleDraw? draw = emitter!.particlesDraw[particleData];
       if (draw == null) continue;
-      // if (ParticleImage.withDebug) {
-      //   particleData.emission.shape.paint(
-      //     canvas,
-      //     Offset.zero + size.center(Offset.zero),
-      //     _paint,
-      //     size,
-      //   );
-      // }
+      if (ParticleImage.withDebug) {
+        particleData.emission.shape.paint(
+          canvas,
+          Offset.zero + size.center(Offset.zero),
+          _debugPaint,
+          size,
+        );
+      }
 
       for (final particle in emitter!.particles[particleData]!) {
         particle.drawExtra(canvas);
-        canvas.drawAtlas(
-          draw.image,
-          draw.transforms,
-          draw.rectangles,
-          draw.colors,
-          BlendMode.modulate,
-          null,
-          _paint,
-        );
       }
+      canvas.drawAtlas(
+        draw.image,
+        draw.transforms,
+        draw.rectangles,
+        draw.colors,
+        BlendMode.modulate,
+        null,
+        _particlePaint,
+      );
     }
   }
 

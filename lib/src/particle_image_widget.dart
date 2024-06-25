@@ -90,4 +90,12 @@ class _ParticleImageState extends State<ParticleImage>
     _controller.removeListener(_controllerListener);
     super.dispose();
   }
+
+  @override
+  void didUpdateWidget(ParticleImage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.particlesData != oldWidget.particlesData) {
+      _emitter?.onChangeParticlesData(widget.particlesData);
+    }
+  }
 }

@@ -48,6 +48,7 @@ class Particle {
 
   Offset _direction = Offset.zero;
   Offset _velocity = Offset.zero;
+  Offset _gravityVelocity = Offset.zero;
 
   double _fixedTime = 1;
   int _totalElapsedMillis = 0;
@@ -100,7 +101,6 @@ class Particle {
 
     _velocity = _direction * speedOverLifetime.value(progress);
     _applyColorOverLifetime();
-    _applySizeOverLifetime();
     _applyGravity();
 
     _applyVortex();
@@ -124,18 +124,11 @@ class Particle {
     color.update(c.alpha, c.red, c.green, c.blue);
   }
 
-  void _applySizeOverLifetime() {
-    final s = sizeOverLifetime.value(progress);
-    rect.update(100, 100);
-    // TODO: fix
-    // rect.update(s.width, s.height);
-  }
-
   void _applyGravity() {
     PD_MovementGravity? gravity = data.movement.gravity;
     if (gravity == null) return;
     double force = gravity.force(progress);
-    _velocity = _velocity + Offset(0, force);
+    _gravityVelocity += Offset(0, force);
   }
 
   void _applyVortex() {
@@ -160,7 +153,8 @@ class Particle {
         -res.dy,
       );
     }
-    _modifedPosition = _modifedPosition + useVelocity * _fixedTime;
+    _modifedPosition =
+        _modifedPosition + (useVelocity + _gravityVelocity) * _fixedTime;
   }
 
   bool _applyAttractor() {

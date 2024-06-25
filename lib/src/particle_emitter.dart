@@ -28,7 +28,7 @@ class ParticleEmitter {
   static final Map<int, ui.Image> particlesTextures = {};
 
   final ParticleController controller;
-  final List<ParticleData> particlesData;
+  List<ParticleData> particlesData;
   final Offset position;
   final Size size;
 
@@ -95,6 +95,11 @@ class ParticleEmitter {
         _setDraw(particleData);
       }
     }
+  }
+
+  void onChangeParticlesData(List<ParticleData> newParticlesData) {
+    particlesData = newParticlesData;
+    init();
   }
 
   void _setDraw(ParticleData particleData) {
